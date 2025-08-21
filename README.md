@@ -1,4 +1,4 @@
-#Programación II de la UTN
+# Programación II de la UTN
 
 profundiza los conceptos de algoritmos y estructuras de datos, e introduce el paradigma de Programación Orientada a Objetos (POO) a través de lenguajes como Java, enseñando a desarrollar software de alto nivel. Se espera que el alumno diseñe y desarrolle programas aplicando estas técnicas, y comprenda el uso de estructuras de datos estáticas y dinámicas, recursión y conceptos como herencia y polimorfismo. 
 Objetivos y Contenidos Principales
