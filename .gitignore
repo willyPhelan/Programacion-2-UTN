@@ -1,0 +1,38 @@
+# Archivos de compilación
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.dll
+*.so
+*.dylib
+
+# Carpetas de compilación
+bin/
+build/
+Debug/
+Release/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+
+# Archivos de depuración
+*.log
+*.pdb
+
+# Archivos temporales de editores/IDE
+*.user
+*.suo
+*.ncb
+*.sdf
+*.VC.db
+*.code-workspace
+*.vscode/
+
+# Archivos generados por CMake
+cmake-build-*/
+
+# Otros
+*.swp
+*~
