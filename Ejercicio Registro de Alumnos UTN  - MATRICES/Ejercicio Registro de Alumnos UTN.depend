@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1755963530 source:c:\users\phela\onedrive\desktop\utn  prog\prog 2\ejercicio registro de alumnos utn\main.cpp
+	<iostream>
+	"funciones.h"
+
+1755966020 c:\users\phela\onedrive\desktop\utn  prog\prog 2\ejercicio registro de alumnos utn\funciones.h
+	<string>
+
+1755966804 source:c:\users\phela\onedrive\desktop\utn  prog\prog 2\ejercicio registro de alumnos utn\puntospararesolver.cpp
+	"funciones.h"
+	<iostream>
+	<string>
+
