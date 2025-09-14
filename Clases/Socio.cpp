@@ -1,0 +1,320 @@
+#include <iostream>
+
+using namespace std ;
+
+class Direccion {
+
+private:
+
+    int numero ;
+    char calle[30], localidad[30] ;
+
+public:
+
+    void cargar() ;
+    void mostrar() ;
+
+
+} ; // FIN CLASE DIRECCION
+
+void Direccion::cargar(){
+
+    cout << "Ingrese la calle: " << endl ;
+    cin >> calle ;
+
+    cout << "Ingrese el numero: " << endl ;
+    cin >> numero ;
+
+    cout << "Ingrese la localidad: " << endl ;
+    cin >> localidad ;
+}
+
+void Direccion::mostrar(){
+
+    cout << "Calle: " << calle <<  endl ;
+    cout << "Numero: " << numero <<  endl ;
+    cout << "Localidad: " << localidad <<  endl ;
+
+    }
+
+class Fecha {
+
+ private:
+
+    int dia, mes, anio ;
+
+    public:
+
+    Fecha (int _dia=0, int _mes=0, int _anio=0){ // CONSTRUCTOR
+
+    dia = _dia ;
+    mes = _mes ;
+    anio = _anio ; }
+
+    void cargar() {
+
+        cout << "Dia: " ;
+        cin >> dia ;
+
+        cout << "Mes: " ;
+        cin >> mes ;
+
+        cout << "Anio: " ;
+        cin >> anio ;
+    }
+
+    bool esCorrecta(){
+
+    if(dia != -1 && mes != -1 && anio != -1) return true ;
+    return false ; }
+
+    void mostrar() {
+
+        if(esCorrecta()){ cout << dia << "/" << mes << "/" << anio ; } else { cout << "Fecha incorrecta" << endl ;}
+
+    }
+
+      // SETTERS metodos dentro de la clase que se utilizan para dar valor a cada una de las props
+
+    void setDia(int d){
+
+    if(d >= 1 && d <= 31) dia = d ; // validacion }
+
+    else dia = -1 ;
+
+    } ;
+
+    void setMes(int m){
+
+    if(m >= 1 && m <= 12) mes = m ;
+
+    else mes = -1 ;
+
+    }
+
+    void setAnio(int a){
+
+    if(a> 0) anio = a ;
+
+    else anio = -1 ;
+
+    }
+
+    // GETTERS devuelven los valores de las propiedades de los objs
+
+    int getDia(){ return dia ; }
+    int getMes(){ return mes ; }
+    int getAnio(){ return anio ; }
+
+    }; // FIN CLASE FECHA
+
+
+
+
+class Socio {
+
+    private:
+
+        int dni, idSocio ;
+        char nombre[30], apellido[30], telefo[15], email[40] ;
+
+        Fecha fechaNacimiento ;
+
+        Direccion domicilio ;
+
+    public:
+
+        void cargar() ;
+        void mostrar() ;
+
+        // gets
+
+        int getIdSocio(){ return idSocio ;}
+        Fecha getFechaNacimiento(){return fechaNacimiento ; }
+
+        Direccion getDomicilio() { return domicilio ; }
+
+        int getDNI() { return dni; }
+
+        // setters
+
+        void setIdSocio(int id){ idSocio = id ; }
+        void setFechaNacimiento(Fecha nac){fechaNacimiento = nac ; }
+        void setDomicilio(Direccion dom){ domicilio = dom ; }
+        void setDiaNacimiento(int d){
+        fechaNacimiento.setDia(d) ;}
+
+
+
+            } ; // FIN CLASE SOCIO
+
+
+    void Socio::cargar(){
+
+    cout << "Id socio: " << endl ;
+    cin >> idSocio ;
+
+    cout << "DNI: "  << endl ;
+    cin >> dni ;
+
+    cout << "Nombre: " << endl ;
+    cin >> nombre ;
+
+    cout << "Apellido: " << endl ;
+    cin >> apellido ;
+
+    cout << endl << "Fecha de nacimiento: " << endl ;
+    fechaNacimiento.cargar() ;
+
+    cout << endl << "Domicilio: " << endl ;
+    domicilio.cargar() ;
+
+    }
+
+
+    void Socio::mostrar(){
+
+    cout << "Id de Socio: " << idSocio << endl ;
+    cout << "Nombre: " << nombre << endl ;
+    cout << "Apellido: " << apellido << endl ;
+    cout << "Fecha de nacimiento: " << endl ;
+     fechaNacimiento.mostrar() ;
+    cout << endl << "Domicilio" << endl ;
+    domicilio.mostrar() ;
+    cout << endl ;
+
+     } // FIN CLASE SOCIO
+
+     // PORTOTIPOS DE FUNCIONES // LLAMADO
+    bool escribirRegistoSocio(Socio reg) ; // recibe un objeto (reg) de la clase Socio
+    bool mostrarRegistroSocio() ;
+
+    // IMPLEMENTACION DE LAD FUNCIONES DECLARADAS EN EL PROTOTIPO
+
+ bool escribirRegistroSocio(Socio reg){
+
+    FILE *pSocio ; // creo el puntero. el cual voy a utilizar para referirme al archivo que creo
+
+    pSocio = fopen("socios.dat", "ab") ; // con la fn fopen abro o creo un archivo especifico. el primer parametro especifica el nombre y la ruta del archivo a crear/abir el segundo, lo que queiro hacerm en este caso w porque quiero escribir y b porque sera un archivo binario
+
+    if(pSocio == nullptr){ return false ; } else {
+
+    bool escribio = fwrite(&reg, sizeof(Socio), 1, pSocio) ;  // el primer parametro de fwrite recibe la direccion el a variable, el segundo el tamano de la variable que que contiene los datos que quiero escribir en el archivo para saber el tamanio en bytes de la variable, uso el operador sizeof
+
+                                                    // el tercer parametro es la cantidad de registros que quiero esribir en el archivo y el cuarto el puntero FILE con el nombre del archivo
+
+    fclose(pSocio) ;
+
+
+    return escribio ;  }
+
+
+    }
+
+bool mostrarRegistroSocio(){
+
+    Socio reg ;
+
+    FILE *pSocio ;
+
+    pSocio = fopen("socios.dat", "rb") ;
+
+     if(pSocio == nullptr){ return false ; } else {
+
+        while (fread(&reg, sizeof(Socio), 1, pSocio)){ // utilizo fread para leer un archivo ya existente // leo 1  registro y lo muestro y lo meto dentro de un while para leer todos los archivos existentes
+                                                       // mientras fread devuelva 1, muestro lo que tengo
+            reg.mostrar() ;
+
+            cout << endl ;
+
+            cout << "----------------------------" << endl;
+
+
+             }
+
+
+            fclose(pSocio) ;
+
+             return true ;}
+
+
+
+
+}
+
+
+        bool mostrarRegistroPorDNI(int dni) {
+            FILE* pSocio = fopen("socios.dat", "rb");
+            if(pSocio == nullptr) return false;
+
+            Socio reg;
+            bool encontrado = false;
+            while(fread(&reg, sizeof(Socio), 1, pSocio)) {
+                if(reg.getDNI() == dni) {
+                    cout << endl << "Socio encontrado:" << endl;
+                    reg.mostrar();
+                    encontrado = true;
+                    break;
+                }
+            }
+            fclose(pSocio);
+            if(!encontrado) cout << endl << "No existe un socio con el DNI ingresado." << endl;
+            return encontrado; }
+
+
+
+    // MENU
+
+        void menu() {
+    int opcion;
+    do {
+        system("cls"); // Limpia pantalla
+        cout << "=== MENU SOCIOS ===\n";
+        cout << "1. Agregar registro\n";
+        cout << "2. Mostrar registro por DNI\n";
+        cout << "0. Salir\n";
+        cout << "Ingrese opcion: ";
+        cin >> opcion;
+
+        switch(opcion) {
+            case 1: {
+                system("cls"); // Limpia pantalla
+                cout << "--- AGREGAR REGISTRO ---\n";
+                Socio nuevo;
+                nuevo.cargar();
+                if(escribirRegistroSocio(nuevo)) cout << "\nRegistro agregado correctamente.\n";
+                else cout << "\nNo se pudo agregar el registro.\n";
+                system("pause"); // Pausa para que vea el mensaje
+                break;
+            }
+            case 2: {
+                system("cls"); // Limpia pantalla
+                cout << "--- MOSTRAR REGISTRO POR DNI ---\n";
+                int dniBuscar;
+                cout << "Ingrese DNI a buscar: ";
+                cin >> dniBuscar;
+                mostrarRegistroPorDNI(dniBuscar);
+                system("pause"); // Pausa para que vea el mensaje
+                break;
+            }
+            case 0:
+                cout << "Saliendo...\n";
+                break;
+            default:
+                cout << "Opcion invalida.\n";
+                system("pause");
+        }
+    } while(opcion != 0);
+}
+
+
+
+
+
+int main() {
+
+   menu() ;
+    return 0 ;
+
+}
+
